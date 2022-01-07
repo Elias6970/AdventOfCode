@@ -1,4 +1,33 @@
-let numbersList=`73,42,95,35,13,40,99,92,33,30,83,1,36,93,59,90,55,25,77,44,37,62,41,47,80,23,51,61,21,20,76,8,71,34,58,5,52,22,39,57,17,2,26,0,10,72,19,3,64,65,82,46,31,63,91,24,18,12,9,79,50,98,69,4,78,54,43,68,87,7,67,48,28,89,94,53,85,81,49,88,6,96,29,56,97,66,38,16,32,70,74,27,84,86,45,75,60,15,14,11`;
+function verify(actualMatrix:number[][])
+{
+    for(let i:number=0;i<5;i++)
+    {
+        for (let j:number=0;j<5;j++)
+        {
+            if (actualMatrix[i][0]==actualMatrix[i][1] && actualMatrix[i][0]==actualMatrix[i][2] && actualMatrix[i][0]==actualMatrix[i][3] && actualMatrix[i][0]==actualMatrix[i][4]) 
+            {
+                return true;
+            }
+            else if(actualMatrix[0][j]==actualMatrix[1][j] && actualMatrix[0][j]==actualMatrix[2][j] && actualMatrix[0][j]==actualMatrix[3][j] && actualMatrix[0][j]==actualMatrix[4][j])
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+let numbers=`73,42,95,35,13,40,99,92,33,30,83,1,36,93,59,90,55,25,77,44,37,62,41,47,80,23,51,61,21,20,76,8,71,34,58,5,52,22,39,57,17,2,26,0,10,72,19,3,64,65,82,46,31,63,91,24,18,12,9,79,50,98,69,4,78,54,43,68,87,7,67,48,28,89,94,53,85,81,49,88,6,96,29,56,97,66,38,16,32,70,74,27,84,86,45,75,60,15,14,11`;
 let inputBoards = `91  5 64 81 34
 15 99 31 63 65
 45 39 54 93 83
@@ -600,6 +629,13 @@ let inputBoards = `91  5 64 81 34
 17 49 91 30 33`;
 
 //Variables
+//split list of numbers
+let numbersList=numbers.split(",");
+let s:number=0;
+let menor:number=0;
+let index:number=0;
+let verifier:boolean=false;
+let totalSum:number=0;
 
 //divide los tableros
 let boards=inputBoards.split("\n\n");
@@ -607,9 +643,17 @@ let boards=inputBoards.split("\n\n");
 //Arrays
 let actualBoardRows: string[];
 let actualRow:string[];
-let actualRowArray:string[];
+let amountOfNumbers:number[]=[];
+
+//primera indice de numero en la lista y el segundo la matriz
+let matrixLibrary:Array<number[][]>=[];
+
+let finalMatrix:number[][]=[];
+
+
+
 //Matriz primer numero la fila, segundo la columna
-let actualBoard:number[][]=[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
+let actualMatrix:number[][]=[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
 
 for (let i:number=0;i<boards.length;i++)
 {
@@ -630,10 +674,51 @@ for (let i:number=0;i<boards.length;i++)
         for (let j:number=0;j<actualRow.length;j++)
         {
             //Matriz primer numero la fila, segundo la columna
-            actualBoard[p][j]=parseInt(actualRow[j]); 
+            actualMatrix[p][j]=parseInt(actualRow[j]); 
         }
     }
-    //mainloop
-    console.log(actualBoard);
-}
+    //mainloop------Matriz primer numero la fila, segundo la columna-----
 
+    for(let n:number=0;n<numbersList.length;n++)
+    {
+        for(let i:number=0;i<actualBoardRows.length;i++)
+        {
+            for (let j:number=0;j<actualBoardRows.length;j++)
+            {
+                if (actualMatrix[i][j]==parseInt(numbersList[n]))
+                {
+                    actualMatrix[i][j]=100;
+                    verifier=verify(actualMatrix);
+                    if(verifier==true)
+                    {
+                        amountOfNumbers[s]=n;
+                        if (s==84) finalMatrix=actualMatrix;
+                        s++;
+                    }
+                }
+                if (verifier==true) break; 
+            }
+            if (verifier==true) break;
+        }
+        if (verifier==true) break;
+    }
+    verifier=false;
+}
+//el indice es el mismo numero
+console.log(finalMatrix);
+menor=amountOfNumbers[0];
+
+for (let i:number=0;i<amountOfNumbers.length;i++)
+{
+    if(menor>amountOfNumbers[i])
+    {
+        menor=amountOfNumbers[i];
+
+        index=i;
+    }
+}
+//console.log(index);
+console.log(numbersList[menor])
+for ()
+
+//console.log(totalSum*parseInt(numbersList[menor]));
