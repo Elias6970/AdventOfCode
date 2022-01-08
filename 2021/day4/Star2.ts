@@ -1,4 +1,3 @@
-
 let numbers=`73,42,95,35,13,40,99,92,33,30,83,1,36,93,59,90,55,25,77,44,37,62,41,47,80,23,51,61,21,20,76,8,71,34,58,5,52,22,39,57,17,2,26,0,10,72,19,3,64,65,82,46,31,63,91,24,18,12,9,79,50,98,69,4,78,54,43,68,87,7,67,48,28,89,94,53,85,81,49,88,6,96,29,56,97,66,38,16,32,70,74,27,84,86,45,75,60,15,14,11`;
 let inputBoards = `91  5 64 81 34
 15 99 31 63 65
@@ -613,10 +612,10 @@ let actualBoardRows: string[];
 let actualRow:string[];
 
 //normal Variables
-let finish:boolean=false;
 let count:number=0;
 let lastNumber:number=0;
 let result:number=0;
+let counter:number=0;
 
 //lista de tableros(matrices)
 let boardsList:Array<number[][]>=[];
@@ -624,6 +623,7 @@ let boardsList:Array<number[][]>=[];
 //Matriz primer numero la fila, segundo la columna
 let actualMatrix:number[][]=[];
 let resultMatrix:number[][]=[];
+const exampleMatrix:number[][]=[[200,200,200,200,200],[200,200,200,200,200],[200,200,200,200,200],[200,200,200,200,200],[200,200,200,200,200]];
 
 //---------------------Generare lista de tableros en forma de matriz---------------------
 for (let i:number=0;i<boards.length;i++)
@@ -659,8 +659,8 @@ function verify(board:number[][]):boolean
     { 
         for (let j:number=0;j<5;j++)
         {
-            if (board[i][0]==board[i][1] && board[i][0]==board[i][2] && board[i][0]==board[i][3] && board[i][0]==board[i][4]) return true;
-            else if(board[0][j]==board[1][j] && board[0][j]==board[2][j] && board[0][j]==board[3][j] && board[0][j]==board[4][j]) return true;
+            if (board[i][0]==120 && board[i][0]==board[i][1] && board[i][0]==board[i][2] && board[i][0]==board[i][3] && board[i][0]==board[i][4]) return true;
+            else if(board[0][j]==120 && board[0][j]==board[1][j] && board[0][j]==board[2][j] && board[0][j]==board[3][j] && board[0][j]==board[4][j]) return true;
         }
     }
     return false;
@@ -679,7 +679,19 @@ function transform(board:number[][]):void
         }
     } 
 }
+// rellena las matrices en 200 para marcarlas como que ya han hecho linea
+function deleteBoard(board:number[][]):void
+{
+    for (let i:number=0;i<5;i++)
+    { 
+        for (let j:number=0;j<5;j++)
+        {
+            board[i][j]=200;
+        }
+    }
+}
 //-------------Bucle principal que recorre los tableros para saber cual es el primero------------
+
 while (0==0)
 {
     for (let i:number=0;i<boardsList.length;i++)
@@ -690,13 +702,17 @@ while (0==0)
         {
             resultMatrix=boardsList[i];
             lastNumber=parseInt(numbersList[count]);
-            finish=true;
+            counter++;
+            if (counter!=boardsList.length) deleteBoard(boardsList[i]);
+
+            if (counter==boardsList.length)break;
         }
-        if (finish==true) break;
+        if (counter==boardsList.length)break;
     }
-    if (finish==true) break;
+    if (counter==boardsList.length)break;
     count++; 
 }
+
 
 //Calcula el resultado del problema sumando las casillas sin marcar 
 // y multiplicandolo por el ultimo numero que ha salido
