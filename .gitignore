@@ -129,4 +129,5 @@ dmypy.json
 .DS_store
 .pyre/
 .vscode
+.vim 
 2021/day4/prueba.ts
